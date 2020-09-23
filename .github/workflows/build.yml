@@ -22,6 +22,8 @@ jobs:
 
       - name: Build Kernel
         run: |
+          pwd
+          ls -R ..
           make -j`nproc` ${DEFCONFIG}
           make -j`nproc`
         env:
