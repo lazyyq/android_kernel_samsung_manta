@@ -16,8 +16,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get update -y
-          sudo apt-get install -y git-core
+          git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7
 
       - name: Build Kernel
         run: |
