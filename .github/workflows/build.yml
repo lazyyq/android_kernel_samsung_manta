@@ -16,14 +16,17 @@ jobs:
 
       - name: Install dependencies
         run: |
-          git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7
+          #git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7
 
       - name: Build Kernel
         run: |
           pwd
-          ls -R ..
-          make -j`nproc` ${DEFCONFIG}
-          make -j`nproc`
+          ls
+          ls ${GITHUB_WORKSPACE}
+          ls ${github.workspace}
+          #ls -R ..
+          #make -j`nproc` ${DEFCONFIG}
+          #make -j`nproc`
         env:
           ARCH: arm
           CROSS_COMPILE: ${GITHUB_WORKSPACE}/arm-eabi-4.7/bin/arm-eabi-
