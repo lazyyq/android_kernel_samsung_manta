@@ -15,18 +15,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install dependencies
-        run: |
-          #git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7
+        run: git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7
 
       - name: Build Kernel
-        run: |
-          pwd
-          ls
-          ls ${GITHUB_WORKSPACE}
-          ls ${github.workspace}
-          #ls -R ..
-          #make -j`nproc` ${DEFCONFIG}
-          #make -j`nproc`
+        run: make -j`nproc` ${DEFCONFIG} > /dev/null && make -j`nproc` > /dev/null && find ${GITHUB_WORKSPACE} -type f -name zImage
         env:
           ARCH: arm
           CROSS_COMPILE: ${GITHUB_WORKSPACE}/arm-eabi-4.7/bin/arm-eabi-
@@ -36,4 +28,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: zImage
-          path: ${GITHUB_WORKSPACE}/android_kernel_samsung_manta/arch/arm/boot/zImage
+          path: ${GITHUB_WORKSPACE}/arch/arm/boot/zImage
