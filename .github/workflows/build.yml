@@ -1,0 +1,43 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build Kernel
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the stable/cm-12.1-YOG7D+dt2w branch
+on:
+  push:
+    branches: [ action_test ]
+  pull_request:
+    branches: [ action_test ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-18.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a set of commands using the runners shell
+      - name: Install dependencies
+        run: git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7
+        working-directory: ${GITHUB_WORKSPACE}
+
+      - name: Build Kernel
+        run: |
+          make -j`nproc` ${DEFCONFIG}
+          make -j`nproc`
+        env:
+          ARCH: arm
+          CROSS_COMPILE: ${GITHUB_WORKSPACE}/arm-eabi-4.7/bin/arm-eabi-
+          DEFCONFIG: cyanogenmod_manta_defconfig
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: zImage
+          path: ${GITHUB_WORKSPACE}/arch/arm/boot/zImage
