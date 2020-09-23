@@ -24,7 +24,10 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Install dependencies
-        run: /usr/bin/git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install git-core
+          /usr/bin/git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7
         working-directory: ${GITHUB_WORKSPACE}
 
       - name: Build Kernel
