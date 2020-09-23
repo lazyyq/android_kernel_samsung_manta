@@ -19,8 +19,8 @@ jobs:
 
       - name: Build Kernel
         run: |
-          echo "Using ${JOBS} threads"
-          make -j${JOBS} ${DEFCONFIG} > /dev/null && make -j${JOBS} > /dev/null
+          echo "Using $(nproc) threads"
+          make -j$(nproc) ${DEFCONFIG} > /dev/null && make -j$(nproc) > /dev/null
         env:
           ARCH: arm
           CROSS_COMPILE: ${GITHUB_WORKSPACE}/arm-eabi-4.7/bin/arm-eabi-
