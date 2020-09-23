@@ -1,33 +1,23 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Build Kernel
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the stable/cm-12.1-YOG7D+dt2w branch
 on:
   push:
     branches: [ action_test ]
   pull_request:
     branches: [ action_test ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - name: Fetch sources
+        uses: actions/checkout@v2
 
-      # Runs a set of commands using the runners shell
       - name: Install dependencies
         run: |
           sudo apt-get update -y
-          sudo apt-get install git-core
-        working-directory: ${GITHUB_WORKSPACE}
+          sudo apt-get install -y git-core
 
       - name: Build Kernel
         run: |
