@@ -2,9 +2,9 @@ name: Build Kernel
 
 on:
   push:
-    branches: [ action_test ]
+    branches: [ action_test, stable/cm-13.0-ZNH5Y+dt2w ]
   pull_request:
-    branches: [ action_test ]
+    branches: [ action_test, stable/cm-13.0-ZNH5Y+dt2w ]
 
 jobs:
   build:
