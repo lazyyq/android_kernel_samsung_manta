@@ -3,10 +3,10 @@ name: Build Kernel
 on:
   push:
     branches-ignore:
-      - 'action_test'
+      - action_test
   pull_request:
     branches-ignore:
-      - 'action_test'
+      - action_test
 
 jobs:
   build:
