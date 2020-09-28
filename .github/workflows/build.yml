@@ -2,17 +2,21 @@ name: Build Kernel
 
 on:
   push:
-    branches: [ action_test, stable/cm-13.0-ZNH5Y+dt2w ]
+    branches-ignore:
+      - 'action_test'
   pull_request:
-    branches: [ action_test, stable/cm-13.0-ZNH5Y+dt2w ]
+    branches-ignore:
+      - 'action_test'
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Fetch sources
         uses: actions/checkout@v2
+        with:
+          ref: ${GITHUB_REF}
 
       - name: Install dependencies
         run: git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7
