@@ -2,11 +2,11 @@ name: Build Kernel
 
 on:
   push:
-    branches-ignore:
-      - action_test
+    branches:
+      - '*'
   pull_request:
-    branches-ignore:
-      - action_test
+    branches:
+      - '*'
 
 jobs:
   build:
