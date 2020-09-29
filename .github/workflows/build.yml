@@ -1,0 +1,39 @@
+name: Build Kernel
+
+on:
+  workflow_dispatch: null
+  push:
+    branches-ignore:
+      - 'actions/*'
+  pull_request:
+    branches-ignore:
+      - 'actions/*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fetch sources
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Install toolchain
+        run: git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7
+
+      - name: Build Kernel
+        run: |
+          echo "Using $(nproc) threads"
+          make -j$(nproc) ${DEFCONFIG} > /dev/null && make -j$(nproc) > /dev/null
+        env:
+          ARCH: arm
+          CROSS_COMPILE: ${{ github.workspace }}/arm-eabi-4.7/bin/arm-eabi-
+          DEFCONFIG: cyanogenmod_manta_defconfig
+          JOBS: $(nproc)
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: zImage
+          path: arch/arm/boot/zImage
